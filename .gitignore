@@ -1,0 +1,36 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Others
+*.pth
+*.pk
+*.model
+*.zip
+*.tar
+*.pyc
+*.o
+*.a
+*.exe
+*.out
+.idea
+**.DS_Store**
+**/__pycache__/**
+**.swp
+*_build
+*.egg-info/
+*.result.jsonl
+build
+dist
+*.npz
+*.mp4
+**/build
+.vscode/
+
+# Jupyter notebook
+.ipynb_checkpoints/
