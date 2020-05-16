@@ -20,11 +20,11 @@ class PortMappingSession(Session):
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, True)
 
     def send_hook(self, data: bytes) -> bytes:
-        logging.info(f"send://{data}")
+        logging.debug(f"send://{data}")
         return data
 
     def recv_hook(self, data: bytes) -> bytes:
-        logging.info(f"recv://{data}")
+        logging.debug(f"recv://{data}")
         return data
 
     def handle(self, request: socket.socket, client_address):
