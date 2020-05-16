@@ -55,7 +55,7 @@ class PortMappingSession(Session):
                         stop = True
                     sock.sendall(self.send_hook(data))
 
-                if len(rfds) == 0 and (time.time() - timeout_integral) > self.timeout:
+                if len(rfds) == 0 and self.timeout and (time.time() - timeout_integral) > self.timeout:
                     raise TimeoutError(f"Port mapping {client_address} <> {self.address} timeout.")
 
             logging.info(f"port mapping {client_address} <> {self.address} exit")
