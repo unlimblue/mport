@@ -4,7 +4,7 @@
 
 ```bash
 python setup.py bdist_wheel
-python -m pip install dist/mport-0.0.1-py3-none-any.whl
+python -m pip install dist/mport-*.*.*-py3-none-any.whl
 ```
 
 #### Usage
