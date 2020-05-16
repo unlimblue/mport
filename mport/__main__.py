@@ -10,16 +10,17 @@ def parse_hostport(hp):
 if __name__ == "__main__":
     import logging
     import argparse
+    from mport import __version__
     from mport.server import Server
     from mport.pm_session import PortMappingSession
 
     parser = argparse.ArgumentParser(
-        "Port mapping",
+        f"Port mapping [v{__version__}]",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     parser.add_argument('-l', "--listen", type=str, default="localhost:11022", help="Server listening address")
     parser.add_argument('-t', "--target", required=True, type=str, help="Target address")
-    parser.add_argument("--timeout", type=float, default=30.0, help="Port mapping timeout [second]")
+    parser.add_argument("--timeout", type=float, default=None, help="Port mapping timeout [second]")
     parser.add_argument("--debug", action="store_true", default=False, help="Set logger level to debug")
 
     args = parser.parse_args()

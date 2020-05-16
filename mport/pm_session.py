@@ -35,31 +35,27 @@ class PortMappingSession(Session):
             self.setup_socket(sock)
             self.setup_socket(request)
             stop = False
-            s_timeout_integral = time.time()
-            r_timeout_integral = time.time()
+            timeout_integral = time.time()
             while not stop:
                 rfds, _, _ = select.select([sock, request], [], [], self.poll_interval)
                 # There are no timeout exceptions in non-blocking mode. Use a timeout argument to select(),
                 # and detect the case where select() returns without any ready sockets.
                 logging.debug(f"session-<{self.session_id}> ready={len(rfds)}")
                 if sock in rfds:
-                    s_timeout_integral = time.time()
+                    timeout_integral = time.time()
                     data = sock.recv(self.buffer_size)
                     if not data:
                         stop = True
                     request.sendall(self.recv_hook(data))
 
                 if request in rfds:
-                    r_timeout_integral = time.time()
+                    timeout_integral = time.time()
                     data = request.recv(self.buffer_size)
                     if not data:
                         stop = True
                     sock.sendall(self.send_hook(data))
 
-                e_time = time.time()
-                if (e_time - s_timeout_integral) > self.timeout:
-                    raise TimeoutError(f"Read data from {self.address} timeout.")
-                if (e_time - r_timeout_integral) > self.timeout:
-                    raise TimeoutError(f"Read data from {client_address} timeout.")
+                if len(rfds) == 0 and (time.time() - timeout_integral) > self.timeout:
+                    raise TimeoutError(f"Port mapping {client_address} <> {self.address} timeout.")
 
             logging.info(f"port mapping {client_address} <> {self.address} exit")
